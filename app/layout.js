@@ -10,7 +10,7 @@ import HeroTilt from "./components/HeroTilt";
 export const metadata = {
   title: "System X Car Care",
   description:
-    "An independent workshop in Al Quoz, Dubai Industrial Area, Abu Dhabi.",
+    "An independent workshop in Al Quoz, Dubai Industrial Area, Dubai.",
   icons: {
     icon: [
       { url: "/favicon4dfb.ico", sizes: "48x48" },
