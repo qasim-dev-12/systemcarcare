@@ -38,12 +38,12 @@ export default function Header() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const toggleSubmenu = (indicator) => {
-    const li = indicator.closest("li.elementskit-dropdown-has");
+  const toggleSubmenu = (li) => {
     const mega = li && li.querySelector(".ea-mega");
     if (!mega) return;
+    const indicator = li.querySelector(".elementskit-submenu-indicator");
     const isOpen = mega.classList.toggle("elementskit-submenu-panel-open");
-    indicator.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    if (indicator) indicator.setAttribute("aria-expanded", isOpen ? "true" : "false");
   };
 
   return (
@@ -62,7 +62,17 @@ export default function Header() {
             const indicator = e.target.closest(".elementskit-submenu-indicator");
             if (indicator) {
               e.preventDefault();
-              toggleSubmenu(indicator);
+              toggleSubmenu(indicator.closest("li.elementskit-dropdown-has"));
+              return;
+            }
+            // On mobile the "Services" row's hit area is mostly the link itself,
+            // not the small chevron, so a tap there should expand the drawer
+            // submenu instead of navigating straight to /services.
+            const link = e.target.closest("a.ekit-menu-nav-link");
+            const dropdownLi = link && link.closest("li.elementskit-dropdown-has");
+            if (dropdownLi && window.matchMedia("(max-width: 1024px)").matches) {
+              e.preventDefault();
+              toggleSubmenu(dropdownLi);
             }
           }}
           onKeyDown={(e) => {
@@ -70,7 +80,7 @@ export default function Header() {
             const indicator = e.target.closest(".elementskit-submenu-indicator");
             if (indicator) {
               e.preventDefault();
-              toggleSubmenu(indicator);
+              toggleSubmenu(indicator.closest("li.elementskit-dropdown-has"));
             }
           }}
         />

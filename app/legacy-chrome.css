@@ -352,10 +352,9 @@ body{overflow-x:clip}
      stay readable rather than inheriting it. */
   .ea-hdr .ea-mega__ic{width:34px;height:34px;border-radius:8px;padding:4px}
   .ea-hdr .ea-mega__ic img{max-width:100%;max-height:100%}
-  .ea-hdr .ea-mega__foot{
-    margin:2px 0 8px;padding:10px 6px 4px 14px;border-top:1px solid var(--eas-line);
-  }
-  .ea-hdr .ea-mega__foot a{padding:4px 0;font-size:13.5px;color:var(--eas-lime)}
+  /* "All Services" is dropped from the drawer -- the row above already
+     toggles the full list, so a link back to the same services is redundant. */
+  .ea-hdr .ea-mega__foot{display:none}
   .ea-hdr li.elementskit-dropdown-has:hover>.ea-mega{opacity:1}
 
   .ea-hdr .ea-nav__mobile-cta{display:flex;flex-direction:column;gap:10px;margin-top:22px}
