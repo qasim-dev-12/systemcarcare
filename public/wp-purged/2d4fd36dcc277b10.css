@@ -1,0 +1,18 @@
+:root{--page-title-display:none}@media (max-width: 767px){.sticky-bottom-section {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        background-color: #fff; /* Adjust as needed */
+    }
+}
+@font-face {
+	font-family: 'Legacy ITC Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-display:swap;
+	src: url('../wp-content/uploads/2024/02/ITC-Legacy-Sans-Book-Regular.woff') format('woff');
+}
+
+:root{--page-title-display:none}

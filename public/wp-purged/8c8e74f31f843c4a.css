@@ -1,0 +1,9 @@
+@keyframes fadeInUp{from{opacity:0;transform:translate3d(0,100%,0)}to{opacity:1;transform:none}}
+
+@font-face {
+	font-family: 'Legacy ITC Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-display:swap;
+	src: url('../wp-content/uploads/2024/02/ITC-Legacy-Sans-Book-Regular.woff') format('woff');
+}

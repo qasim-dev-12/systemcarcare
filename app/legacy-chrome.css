@@ -1,0 +1,492 @@
+
+.ea-hdr,.ea-ftr{
+  --eas-lime:#e2242b;--eas-lime-hi:#ff4d4d;
+  --eas-ink:#080a08;--eas-panel:#101310;--eas-line:#242a24;
+  --eas-text:#b9c0ba;--eas-dim:#8b938c;--eas-white:#fff;
+  --eas-wrap:1200px;
+  font-family:Montserrat,"Segoe UI",Arial,Helvetica,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.ea-hdr *,.ea-ftr *{box-sizing:border-box}
+.ea-hdr a,.ea-ftr a{text-decoration:none}
+.ea-hdr img,.ea-ftr img{max-width:100%;height:auto}
+.ea-hdr__wrap,.ea-ftr__wrap{max-width:var(--eas-wrap);margin:0 auto;padding:0 20px}
+
+/* ============================ header ============================ */
+/* Sticky, so the nav and the call button stay reachable on pages that run to
+   several thousand words. position:sticky rather than fixed: it keeps the
+   header in flow, so nothing below needs a compensating top margin, and the
+   mega panel can stay absolutely positioned against it.
+   scroll-padding-top is the other half. Without it an in-page jump such as
+   #quote lands with the target tucked under the bar. It has to be set on the
+   scroll container, which is the root element, so this one rule is
+   deliberately not scoped under .ea-hdr. */
+/* On html AND body. The migrated theme sets overflow-x on body, which makes
+   body the scroll container, and scroll-padding on a non-scrolling root is
+   ignored -- the jump then lands with the target tucked under the bar. */
+html,body{scroll-padding-top:84px}
+/* overflow-x:clip, not hidden. The theme sets overflow-x:hidden on body below
+   1024px; hidden makes body a scroll container, and a scroll container ancestor
+   silently kills position:sticky, so the header scrolled away on phones while
+   working on desktop. clip does the same clipping without the scroll container,
+   which is exactly the difference between the two values. */
+body{overflow-x:clip}
+.ea-hdr{
+  position:sticky;top:0;z-index:1000;
+  background:var(--eas-ink);color:var(--eas-white);
+  box-shadow:0 1px 0 var(--eas-line);
+}
+@media (max-width:1024px){html,body{scroll-padding-top:74px}}
+/* No vertical padding here, min-height instead. The nav items stretch to the
+   full height of the bar (see below) and the mega panel opens at the bar's
+   bottom edge; any padding on this element would sit between the two as a
+   strip that belongs to neither, which is exactly where the pointer loses the
+   menu. Logo and call button stay centred via align-items. */
+.ea-hdr__bar{
+  display:flex;align-items:center;gap:24px;
+  max-width:var(--eas-wrap);margin:0 auto;padding:0 20px;min-height:68px;
+}
+/* Logo and actions size to their own contents; the nav takes everything left
+   between them and centres its items in it, so the menu sits midway between
+   the logo and the language toggle. That is the gap's centre, not the bar's --
+   the two differ because the actions block is wider than the logo, and the gap
+   is what reads as centred. */
+.ea-hdr__logo{flex:none;display:inline-flex;align-items:center}
+.ea-hdr__logo img{display:block;width:auto;height:46px}
+
+/* ---- top-level nav ---- */
+/* The nav, its list and each item all stretch to the bar's full height, so the
+   hover target reaches down to the exact line where the mega panel begins.
+   With items only as tall as their own text there is a gap between the two,
+   and moving the pointer toward the panel drops :hover and closes it before it
+   can be reached -- which made every link in both panels unclickable. */
+.ea-hdr .ea-nav{flex:1 1 auto;min-width:0;align-self:stretch}
+.ea-hdr ul.elementskit-navbar-nav{
+  display:flex;align-items:stretch;justify-content:center;gap:2px;height:100%;
+  margin:0;padding:0;list-style:none;
+}
+.ea-hdr ul.elementskit-navbar-nav>li{
+  position:static;display:flex;align-items:center;
+  margin:0;padding:0;list-style:none;
+}
+.ea-hdr ul.elementskit-navbar-nav>li>a{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 13px;border-radius:8px;
+  font-size:14.5px;font-weight:500;line-height:1.2;color:var(--eas-text);
+  transition:color .16s ease,background-color .16s ease;
+}
+.ea-hdr ul.elementskit-navbar-nav>li>a:hover,
+.ea-hdr ul.elementskit-navbar-nav>li>a:focus-visible{color:var(--eas-white);background:#ffffff0f}
+.ea-hdr ul.elementskit-navbar-nav>li.current-menu-item>a{color:var(--eas-lime)}
+.ea-hdr .ea-nav__caret{width:9px;height:9px;flex:none;opacity:.75;transition:transform .16s ease}
+.ea-hdr li.elementskit-dropdown-has:hover>a .ea-nav__caret{transform:rotate(180deg)}
+
+/* ---- mega panels ----
+   display:block with visibility/opacity rather than display:none, because the
+   mobile toggle sets an inline display:block and that must not leave a panel
+   stuck open if the viewport is later widened. */
+/*
+ * The panel is dark, continuing the bar rather than cutting a white slab out
+ * of the page.
+ *
+ * The marque logos are dark and coloured marks drawn for a light ground, so
+ * they cannot sit on the dark surface directly. They do not have to: each one
+ * already has its own white tile, which is what the brand tiles on the service
+ * pages do for the same files. The tiles carry the light ground and the panel
+ * around them stays dark.
+ */
+/*
+ * .ea-mega is only a positioning track: it spans the header so the card can be
+ * centred on the page, carries no surface of its own, and takes no pointer
+ * events, so the transparent band beside the card does not swallow clicks on
+ * the page underneath while the menu is open.
+ *
+ * The card is .ea-mega__in. It is width:max-content, so it is exactly as wide
+ * as its own contents rather than stretching to a fixed wrapper -- the brands
+ * panel, with four short labels, comes out much narrower than the services one
+ * and both stay centred. The 1fr tracks inside a max-content container resolve
+ * to equal columns sized to the widest item, which keeps the columns even
+ * without hard-coding a width that the longest label would overflow.
+ */
+.ea-hdr .ea-mega{
+  display:block;position:absolute;left:0;right:0;top:100%;
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-6px);
+  transition:opacity .18s ease,transform .18s ease,visibility .18s;
+  color:var(--eas-text);
+}
+.ea-hdr li.elementskit-dropdown-has:hover>.ea-mega,
+.ea-hdr li.elementskit-dropdown-has:focus-within>.ea-mega{
+  opacity:1;visibility:visible;transform:none;
+}
+/* Flush to the underside of the bar, not floated below it: a visible gap would
+   be dead space the pointer has to cross, and the card would close halfway. */
+.ea-hdr .ea-mega__in{
+  width:max-content;max-width:min(var(--eas-wrap),calc(100vw - 32px));
+  margin:0 auto;padding:20px 22px 8px;pointer-events:auto;
+  background:var(--eas-panel);border:1px solid var(--eas-line);border-top:0;
+  border-radius:0 0 16px 16px;
+  box-shadow:0 26px 54px rgba(0,0,0,.5);
+}
+.ea-hdr .ea-mega__grid{
+  display:grid;gap:2px 10px;margin:0;padding:0;list-style:none;
+}
+.ea-hdr .ea-mega__grid--5{grid-template-columns:repeat(5,1fr)}
+.ea-hdr .ea-mega__grid--4{grid-template-columns:repeat(4,1fr)}
+.ea-hdr .ea-mega__grid--3{grid-template-columns:repeat(3,1fr)}
+.ea-hdr .ea-mega li{margin:0}
+.ea-hdr .ea-mega a{
+  display:flex;align-items:center;gap:11px;
+  padding:9px 10px;border-radius:10px;
+  font-size:13.5px;line-height:1.3;font-weight:500;color:var(--eas-text);
+  transition:color .14s ease,background-color .14s ease;
+}
+.ea-hdr .ea-mega a:hover,.ea-hdr .ea-mega a:focus-visible{
+  color:var(--eas-white);background:#ffffff0f;
+}
+
+/* The icon tile. Services get a raised square with a lime glyph; brands get a
+   white one, because the logo inside it needs the light ground it was drawn
+   for even though the panel around it is dark. */
+.ea-hdr .ea-mega__ic{
+  flex:none;width:34px;height:34px;border-radius:9px;
+  display:grid;place-items:center;
+  transition:background-color .14s ease,border-color .14s ease;
+}
+/* Services and brands are both artwork on a white tile now, and for the same
+   reason: these illustrations are mid-tone with transparent grounds, so on the
+   dark panel they would sit at almost no contrast. */
+.ea-hdr .ea-mega--services .ea-mega__ic{
+  background:#fff;border:1px solid #ffffff1f;width:44px;height:44px;padding:5px;
+}
+.ea-hdr .ea-mega--services a:hover .ea-mega__ic{border-color:var(--eas-lime)}
+.ea-hdr .ea-mega--services .ea-mega__ic img{
+  max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+}
+/* Bigger than the service tile, and the marks inside bigger again: several of
+   these logos are wide, thin wordmarks (Bentley, Maserati, Camaro) that were
+   unreadable at the size a square glyph is comfortable at. */
+.ea-hdr .ea-mega--brands .ea-mega__ic{
+  background:#fff;border:1px solid #ffffff1f;width:44px;height:44px;padding:5px;
+}
+.ea-hdr .ea-mega--brands a:hover .ea-mega__ic{border-color:var(--eas-lime)}
+.ea-hdr .ea-mega--brands .ea-mega__ic img{
+  max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+}
+.ea-hdr .ea-mega__t{min-width:0}
+
+/* The full-width link across the foot, as on the reference layout. */
+.ea-hdr .ea-mega__foot{
+  margin:10px 0 0;padding:12px 10px 16px;border-top:1px solid var(--eas-line);
+}
+.ea-hdr .ea-mega__foot a{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 10px;
+  font-size:14px;font-weight:700;color:var(--eas-lime);
+}
+.ea-hdr .ea-mega__foot a:hover{color:var(--eas-lime-hi);background:transparent}
+.ea-hdr .ea-mega__arw{width:14px;height:10px;transition:transform .14s ease}
+.ea-hdr .ea-mega__foot a:hover .ea-mega__arw{transform:translateX(3px)}
+
+/* Below the full width the grid narrows rather than scrolling sideways. */
+@media (max-width:1080px){
+  .ea-hdr .ea-mega__grid--5{grid-template-columns:repeat(4,1fr)}
+  .ea-hdr .ea-mega__grid--4{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ---- call button + language switch ---- */
+.ea-hdr__actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex:none}
+.ea-hdr__call{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;border-radius:999px;
+  background:var(--eas-lime);color:#0b0d0c;
+  font-size:14.5px;font-weight:700;white-space:nowrap;
+  transition:background-color .16s ease;
+}
+.ea-hdr__call:hover,.ea-hdr__call:focus-visible{background:var(--eas-lime-hi);color:#0b0d0c}
+.ea-hdr__call svg{width:16px;height:16px;flex:none}
+.ea-hdr__map{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:999px;border:1px solid var(--eas-line);
+  color:var(--eas-lime);transition:border-color .16s ease,background-color .16s ease;
+}
+.ea-hdr__map:hover,.ea-hdr__map:focus-visible{background:#ffffff0f;border-color:var(--eas-lime)}
+.ea-hdr__map svg{width:19px;height:19px}
+
+/* The language toggle page.tsx adds to the actions block. Outlined rather than
+   filled, so it reads as secondary to the call button it now sits beside. */
+.ea-hdr__lang{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 13px;border-radius:999px;border:1px solid var(--eas-line);
+  font-size:14px;font-weight:600;color:var(--eas-text);white-space:nowrap;
+  transition:color .16s ease,border-color .16s ease,background-color .16s ease;
+}
+.ea-hdr__lang:hover,.ea-hdr__lang:focus-visible{
+  color:var(--eas-white);border-color:var(--eas-lime);background:#ffffff0f;
+}
+.ea-hdr .ea-flag{width:19px;height:13px;border-radius:2px;flex:none}
+
+/* ---- hamburger, hidden until the nav collapses ---- */
+.ea-hdr .elementskit-menu-hamburger{
+  display:none;flex:none;margin-left:auto;
+  width:44px;height:44px;padding:0;
+  align-items:center;justify-content:center;
+  background:transparent;border:1px solid var(--eas-line);border-radius:10px;
+  color:var(--eas-white);cursor:pointer;
+}
+.ea-hdr .elementskit-menu-hamburger svg{width:20px;height:20px;flex:none}
+/* padding:0 is load-bearing. The shipped ElementsKit CSS sets
+   padding:17px 40px on .ekit-menu-close, which stretched the button to 82px
+   and squeezed the icon to 0x16 -- a bordered box with nothing in it. Same
+   reason for flex:none on the svg: without it the icon is the flex item that
+   gives way. */
+.ea-hdr .ekit-menu-close{
+  display:none;position:absolute;top:14px;right:14px;
+  width:38px;height:38px;padding:0;align-items:center;justify-content:center;
+  background:transparent;border:1px solid var(--eas-line);border-radius:9px;
+  color:var(--eas-white);cursor:pointer;
+}
+.ea-hdr .ekit-menu-close svg{width:16px;height:16px;flex:none}
+.ea-hdr .elementskit-menu-overlay{display:none}
+.ea-hdr .elementskit-submenu-indicator{display:none}
+
+/* Compaction so the six items still fit the gap once it narrows. */
+@media (max-width:1120px){
+  .ea-hdr ul.elementskit-navbar-nav>li>a{padding:9px;font-size:14px}
+  .ea-hdr__bar{gap:14px}
+  .ea-hdr__actions{gap:8px}
+  .ea-hdr__call{padding:8px 12px;font-size:14px}
+  .ea-hdr__map{width:34px;height:34px}
+  .ea-hdr__map svg{width:17px;height:17px}
+  .ea-hdr__lang{padding:8px 10px;font-size:13.5px}
+}
+
+/* ---- collapsed nav ---- */
+@media (max-width:1024px){
+  .ea-hdr__bar{gap:12px;min-height:62px}
+  .ea-hdr__logo img{height:40px}
+  /* The actions block stays visible, but only for the language toggle. The
+     call and directions buttons are already in the drawer's own CTA block, and
+     repeating them in a 390px bar leaves no room for the toggle or the
+     hamburger. */
+  .ea-hdr__actions{flex:none;gap:8px}
+  .ea-hdr__call,.ea-hdr__map{display:none}
+  .ea-hdr__lang{padding:7px 11px;font-size:13.5px}
+  .ea-hdr .elementskit-menu-hamburger{display:inline-flex}
+
+  .ea-hdr .ea-nav.elementskit-menu-offcanvas-elements{
+    position:fixed;top:0;bottom:0;right:0;left:auto;
+    width:min(86vw,330px);margin:0;padding:64px 16px 40px;
+    background:var(--eas-panel);border-left:1px solid var(--eas-line);
+    overflow-y:auto;overscroll-behavior:contain;
+    transform:translateX(100%);transition:transform .26s ease,visibility .26s;
+    visibility:hidden;z-index:1002;
+  }
+  .ea-hdr .ea-nav.elementskit-menu-offcanvas-elements.active{transform:none;visibility:visible}
+  .ea-hdr .ekit-menu-close{display:inline-flex}
+
+  .ea-hdr .elementskit-menu-overlay.elementskit-menu-offcanvas-elements{
+    display:block;position:fixed;inset:0;z-index:1001;
+    background:rgba(0,0,0,.55);opacity:0;visibility:hidden;
+    transition:opacity .26s ease,visibility .26s;
+  }
+  .ea-hdr .elementskit-menu-overlay.elementskit-menu-offcanvas-elements.active{opacity:1;visibility:visible}
+
+  .ea-hdr ul.elementskit-navbar-nav{display:block;height:auto}
+  .ea-hdr ul.elementskit-navbar-nav>li{display:block;border-bottom:1px solid var(--eas-line)}
+  .ea-hdr ul.elementskit-navbar-nav>li>a{
+    padding:13px 8px;border-radius:0;font-size:15.5px;color:var(--eas-white);
+  }
+  .ea-hdr .ea-nav__caret{display:none}
+  .ea-hdr .elementskit-submenu-indicator{
+    display:flex;align-items:center;justify-content:center;
+    position:absolute;top:4px;right:0;width:44px;height:44px;
+    color:var(--eas-text);cursor:pointer;
+  }
+  /* pointer-events:none so the click lands on the span itself. Delegation would
+     cope either way -- WpInteractions walks up with closest() -- but a target
+     that is the hit area rather than a child of it is easier to reason about. */
+  .ea-hdr .elementskit-submenu-indicator svg{width:11px;height:11px;pointer-events:none;transition:transform .16s ease}
+  .ea-hdr .ea-mega.elementskit-submenu-panel-open+.elementskit-submenu-indicator svg,
+  .ea-hdr li.elementskit-dropdown-has .elementskit-submenu-indicator[aria-expanded="true"] svg{transform:rotate(180deg)}
+  /* Specificity, not taste. The desktop rule above sets position:static on
+     .ea-hdr ul.elementskit-navbar-nav>li -- (0,2,2), and the mega panel needs
+     it so the panel can span the whole bar. Writing this override as
+     .ea-hdr li.elementskit-dropdown-has is (0,2,1), so it loses, and every
+     indicator then positions against the fixed drawer rather than its own row:
+     all of them stack in the top-right corner and only the last is clickable.
+     Matching the shape of the desktop selector is what fixes it. */
+  .ea-hdr ul.elementskit-navbar-nav>li.elementskit-dropdown-has{position:relative}
+
+  /* On mobile the panel is genuinely hidden and the toggle reveals it, both via
+     the class WpInteractions adds and the inline display it sets. */
+  .ea-hdr .ea-mega{
+    display:none;position:static;opacity:1;visibility:visible;
+    pointer-events:auto;transform:none;transition:none;
+    background:transparent;border:0;box-shadow:none;color:inherit;
+  }
+  .ea-hdr .ea-mega.elementskit-submenu-panel-open{display:block}
+  .ea-hdr .ea-mega__in{
+    width:auto;max-width:none;padding:0;
+    background:transparent;border:0;border-radius:0;box-shadow:none;
+  }
+  /* Two columns in the drawer rather than one: thirty services in a single
+     column is a very long scroll, and the icon makes a two-up row scannable. */
+  .ea-hdr .ea-mega__grid,
+  .ea-hdr .ea-mega__grid--5,
+  .ea-hdr .ea-mega__grid--4,
+  .ea-hdr .ea-mega__grid--3{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:2px 6px;padding:0 0 6px;
+  }
+  .ea-hdr .ea-mega a{
+    gap:9px;padding:8px 6px 8px 14px;font-size:13px;color:var(--eas-text);
+  }
+  .ea-hdr .ea-mega a:hover,.ea-hdr .ea-mega a:focus-visible{
+    color:var(--eas-lime-hi);background:#ffffff0d;
+  }
+  /* The drawer ground is dark, so the tiles keep their own light surface to
+     stay readable rather than inheriting it. */
+  .ea-hdr .ea-mega__ic{width:34px;height:34px;border-radius:8px;padding:4px}
+  .ea-hdr .ea-mega__ic img{max-width:100%;max-height:100%}
+  .ea-hdr .ea-mega__foot{
+    margin:2px 0 8px;padding:10px 6px 4px 14px;border-top:1px solid var(--eas-line);
+  }
+  .ea-hdr .ea-mega__foot a{padding:4px 0;font-size:13.5px;color:var(--eas-lime)}
+  .ea-hdr li.elementskit-dropdown-has:hover>.ea-mega{opacity:1}
+
+  .ea-hdr .ea-nav__mobile-cta{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+  .ea-hdr .ea-nav__mobile-cta a{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 16px;border-radius:10px;font-size:15px;font-weight:700;
+  }
+  .ea-hdr .ea-nav__mobile-cta .is-call{background:var(--eas-lime);color:#0b0d0c}
+  .ea-hdr .ea-nav__mobile-cta .is-map{border:1px solid var(--eas-line);color:var(--eas-white)}
+  .ea-hdr .ea-nav__mobile-cta svg{width:16px;height:16px;flex:none}
+}
+@media (min-width:1025px){
+  .ea-hdr .ea-nav__mobile-cta{display:none}
+}
+
+/* ============================ footer ============================ */
+.ea-ftr{background:var(--eas-ink);color:var(--eas-text);font-size:14.5px;line-height:1.6}
+.ea-ftr h2{margin:0;font-family:inherit;color:var(--eas-white)}
+.ea-ftr a{color:inherit;transition:color .14s ease}
+.ea-ftr a:hover,.ea-ftr a:focus-visible{color:var(--eas-lime-hi)}
+.ea-ftr ul{margin:0;padding:0;list-style:none}
+
+/* ---- main columns ---- */
+.ea-ftr__main{
+  display:grid;gap:40px 36px;padding:48px 0 44px;
+  /* Three tracks now the service columns have gone. The map keeps the widest:
+     Google's embed draws the place label to the right of its pin, and at the
+     ~300px an even split gives it the label runs off the edge of the frame. */
+  grid-template-columns:1fr 1.65fr 1.35fr;
+}
+.ea-ftr__col .ea-ftr__h{
+  margin:0 0 16px;font-family:inherit;
+  font-size:16px;font-weight:700;letter-spacing:.01em;color:var(--eas-white);
+}
+.ea-ftr__links li{margin:0}
+.ea-ftr__links a{display:block;padding:5px 0;font-size:14px}
+/* CSS columns rather than a second grid cell, so the twenty-one marques read
+   as one list under one label instead of needing a heading over each half or a
+   spacer to keep the two aligned. break-inside stops a name splitting across
+   the gutter. */
+.ea-ftr__links--2col{column-count:2;column-gap:32px}
+.ea-ftr__links--2col li{break-inside:avoid}
+/* The last cell: a link to the full marque list, given the weight of the
+   column label rather than of the twenty-one links above it, so it reads as
+   the way out of the list instead of as one more entry in it. */
+.ea-ftr__all>a{
+  display:inline-flex;align-items:center;gap:7px;
+  font-weight:700;color:var(--eas-lime);
+}
+.ea-ftr__all>a:hover,.ea-ftr__all>a:focus-visible{color:var(--eas-lime-hi)}
+.ea-ftr__all svg{width:14px;height:10px;flex:none;transition:transform .14s ease}
+.ea-ftr__all>a:hover svg{transform:translateX(3px)}
+
+.ea-ftr__logo{display:inline-block;margin-bottom:14px}
+.ea-ftr__logo img{width:auto;height:52px}
+.ea-ftr__blurb{margin:0 0 20px;font-size:14px;color:var(--eas-dim);max-width:34ch}
+
+.ea-ftr__contact{display:grid;gap:11px;margin:0 0 22px}
+.ea-ftr__contact a,.ea-ftr__contact span{display:flex;align-items:flex-start;gap:10px;font-size:14px}
+.ea-ftr__contact svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--eas-lime)}
+
+.ea-ftr__social{display:flex;flex-wrap:wrap;gap:9px}
+.ea-ftr__social a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:999px;
+  border:1px solid var(--eas-line);color:var(--eas-text);
+  transition:color .14s ease,border-color .14s ease,background-color .14s ease;
+}
+.ea-ftr__social a:hover,.ea-ftr__social a:focus-visible{
+  color:var(--eas-lime);border-color:var(--eas-lime);background:#ffffff0a;
+}
+.ea-ftr__social svg{width:16px;height:16px;fill:currentColor}
+
+.ea-ftr__cards{margin-top:22px}
+.ea-ftr__cards p{margin:0 0 9px;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--eas-dim)}
+.ea-ftr__cardrow{display:flex;flex-wrap:wrap;gap:8px}
+.ea-ftr__cardrow svg{width:42px;height:27px;border-radius:4px;display:block}
+
+/* ---- the map ---- */
+.ea-ftr__hours{display:grid;gap:4px;margin:0 0 16px;font-size:13.5px}
+.ea-ftr__hours div{display:flex;justify-content:space-between;gap:14px;max-width:290px}
+.ea-ftr__hours span:last-child{color:var(--eas-white);white-space:nowrap}
+/* The map column is a flex column and the map takes whatever height is left in
+   it, instead of setting its own with an aspect ratio.
+   Grid rows are as tall as their tallest item, and at 4/3 the map was that
+   item: the other columns ended a hundred-odd pixels higher, leaving a band of
+   empty footer above the copyright line. Letting the map fill the remainder
+   inverts that -- the brand list sets the row height and the map ends level
+   with it, so the columns finish together and the footer is as tall as its
+   content rather than as tall as an aspect ratio. */
+.ea-ftr__col--map{display:flex;flex-direction:column}
+.ea-ftr__map{
+  position:relative;overflow:hidden;border-radius:12px;
+  border:1px solid var(--eas-line);background:#161a16;
+  flex:1 1 auto;min-height:190px;
+}
+.ea-ftr__map iframe{display:block;width:100%;height:100%;border:0}
+.ea-ftr__maplink{display:inline-flex;align-items:center;gap:7px;margin-top:11px;font-size:13.5px;color:var(--eas-lime)}
+.ea-ftr__maplink svg{width:14px;height:14px}
+
+/* ---- legal strip ---- */
+.ea-ftr__legal{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 22px;
+  padding:18px 0 22px;border-top:1px solid var(--eas-line);font-size:13.5px;color:var(--eas-dim);
+}
+.ea-ftr__legal ul{display:flex;flex-wrap:wrap;gap:18px}
+.ea-ftr__legal p{margin:0}
+
+@media (max-width:1024px){
+  /* Two by two, with the map in the fourth cell rather than spanning a row of
+     its own. Spanning left "More Services" alone beside an empty cell, and blew
+     the map up to ~780px wide, which Google's embed renders at the size it had
+     when its own script ran rather than re-laying out to fit. At this width the
+     map is about what it is on desktop, which is a size it draws correctly. */
+  /* Two up, with the brand list across the bottom. The order property puts the
+     map beside the contact column instead of on a row of its own: the brand
+     list spans both tracks and in DOM order sits between them, so without this
+     the map is pushed to a third row with an empty cell next to it. */
+  .ea-ftr__main{grid-template-columns:1fr 1fr;gap:34px 28px}
+  .ea-ftr__col--map{order:1}
+  .ea-ftr__col--brands{order:2;grid-column:1/-1}
+  .ea-ftr__links--2col{column-count:3}
+}
+@media (max-width:640px){
+  .ea-ftr__main{grid-template-columns:1fr;gap:30px;padding:36px 0 34px}
+  /* Single column: back to DOM order, brands above the map. */
+  .ea-ftr__col--map{order:2}
+  .ea-ftr__col--brands{order:1;grid-column:auto}
+  .ea-ftr__links--2col{column-count:2;column-gap:20px}
+  /* Single column, so there is no sibling to match: the map sets its own
+     height again. */
+  .ea-ftr__map{flex:0 0 auto;aspect-ratio:4/3}
+  .ea-ftr__col--map{grid-column:auto}
+  .ea-ftr__blurb{max-width:none}
+  .ea-ftr__hours div{max-width:none}
+  .ea-ftr__legal{flex-direction:column;align-items:flex-start;padding-bottom:26px}
+  /* The floating Call/WhatsApp bar sits over the bottom of the page on phones. */
+  .ea-ftr{padding-bottom:64px}
+}
+

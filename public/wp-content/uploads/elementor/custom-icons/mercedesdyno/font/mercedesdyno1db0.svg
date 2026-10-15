@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2023 by original authors @ fontello.com</metadata>
+<defs>
+<font id="mercedesdyno" horiz-adv-x="1000" >
+<font-face font-family="mercedesdyno" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="asset-1" unicode="&#xe800;" d="M1103 836h-535c-268 0-490-219-490-487 1-269 219-487 489-485 269 1 485 220 484 489-1 58-11 113-30 164h-372c61-31 102-94 102-167 0-102-82-185-184-187-104-1-189 83-189 187s83 187 186 187h539c11 0 20 9 20 20v259c0 11-9 20-20 20z m-898-846c-47 47-84 102-109 162-2 4-3 8-5 11h-57c-11 0-20-9-20-20v-259c0-11 9-20 20-20h381c-17 5-33 11-49 17-60 26-115 63-161 109z m420 360c0 34-27 61-61 61s-60-27-60-61 27-61 60-61 61 28 61 61z m-66 81l-5 75c-34-2-67-15-93-38l50-57c13 11 30 19 48 20z m-56-135c-11 14-18 30-20 49l-75-5c2-35 16-67 39-93l56 49z m-95 64l75-5c2 19 9 36 20 49l-56 50c-23-27-37-59-39-94z m162 71c18-1 35-8 48-20l50 57c-26 23-59 36-94 38l-4-75z m151-91l-76 5c-1-19-8-35-20-49l57-49c23 26 37 58 39 93z m-39 114l-57-50c12-13 19-30 20-49l76 5c-2 35-16 67-39 94z m-14-222l-50 57c-13-11-30-19-48-20l4-75c35 2 68 15 94 38z m-109 37c-18 1-35 9-48 20l-50-57c26-23 59-36 93-38l5 75z" horiz-adv-x="1137" />
+</font>
+</defs>
+</svg>
