@@ -203,6 +203,15 @@ body{overflow-x:clip}
 }
 .ea-hdr__call:hover,.ea-hdr__call:focus-visible{background:var(--eas-lime-hi);color:#0b0d0c}
 .ea-hdr__call svg{width:16px;height:16px;flex:none}
+.ea-hdr__whatsapp{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;border-radius:999px;
+  background:#25d366;color:#07301a;
+  font-size:14.5px;font-weight:700;white-space:nowrap;
+  transition:background-color .16s ease;
+}
+.ea-hdr__whatsapp:hover,.ea-hdr__whatsapp:focus-visible{background:#1fb959;color:#07301a}
+.ea-hdr__whatsapp svg{width:16px;height:16px;flex:none}
 .ea-hdr__map{
   display:inline-flex;align-items:center;justify-content:center;
   width:40px;height:40px;border-radius:999px;border:1px solid var(--eas-line);
@@ -253,23 +262,20 @@ body{overflow-x:clip}
   .ea-hdr ul.elementskit-navbar-nav>li>a{padding:9px;font-size:14px}
   .ea-hdr__bar{gap:14px}
   .ea-hdr__actions{gap:8px}
-  .ea-hdr__call{padding:8px 12px;font-size:14px}
+  .ea-hdr__call,.ea-hdr__whatsapp{padding:8px 12px;font-size:14px}
   .ea-hdr__map{width:34px;height:34px}
   .ea-hdr__map svg{width:17px;height:17px}
-  .ea-hdr__lang{padding:8px 10px;font-size:13.5px}
 }
 
 /* ---- collapsed nav ---- */
 @media (max-width:1024px){
   .ea-hdr__bar{gap:12px;min-height:62px}
   .ea-hdr__logo img{height:40px}
-  /* The actions block stays visible, but only for the language toggle. The
-     call and directions buttons are already in the drawer's own CTA block, and
-     repeating them in a 390px bar leaves no room for the toggle or the
+  /* The call, WhatsApp and directions buttons are already in the drawer's own
+     CTA block, and repeating them in a 390px bar leaves no room for the
      hamburger. */
   .ea-hdr__actions{flex:none;gap:8px}
-  .ea-hdr__call,.ea-hdr__map{display:none}
-  .ea-hdr__lang{padding:7px 11px;font-size:13.5px}
+  .ea-hdr__call,.ea-hdr__whatsapp,.ea-hdr__map{display:none}
   .ea-hdr .elementskit-menu-hamburger{display:inline-flex}
 
   .ea-hdr .ea-nav.elementskit-menu-offcanvas-elements{

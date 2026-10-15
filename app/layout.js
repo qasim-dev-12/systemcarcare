@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FloatingWidgets from "./components/FloatingWidgets";
 import Preamble from "./components/Preamble";
+import CarouselEnhancer from "./components/CarouselEnhancer";
 
 export const metadata = {
   title: "System X Car Care",
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
           <Footer />
         </div>
         <FloatingWidgets />
+        <CarouselEnhancer />
       </body>
     </html>
   );
