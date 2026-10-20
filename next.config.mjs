@@ -3,7 +3,8 @@ const nextConfig = {
   async redirects() {
     return [
       { source: "/car-body-kit-abu-dhabi", destination: "/car-body-kit-dubai", permanent: true },
-      { source: "/car-exterior-detailing-abu-dhabi", destination: "/car-exterior-detailing-dubai", permanent: true },
+      { source: "/car-exterior-detailing-dubai", destination: "/car-interior-detailing-dubai", permanent: true },
+      { source: "/car-exterior-detailing-abu-dhabi", destination: "/car-interior-detailing-dubai", permanent: true },
       { source: "/car-interior-detailing-abu-dhabi", destination: "/car-interior-detailing-dubai", permanent: true },
       { source: "/car-major-services-in-abu-dhabi", destination: "/car-major-services-in-dubai", permanent: true },
       { source: "/car-rust-proofing-abu-dhabi", destination: "/car-rust-proofing-dubai", permanent: true },
