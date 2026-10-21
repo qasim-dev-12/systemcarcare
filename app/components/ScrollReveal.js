@@ -68,10 +68,10 @@ export default function ScrollReveal() {
     <style
       dangerouslySetInnerHTML={{
         __html: `
-[data-au-anim="reveal"]{opacity:0;transform:translateY(22px);transition:opacity .6s ease-out,transform .6s ease-out}
-[data-au-anim="reveal"].au-in{opacity:1;transform:translateY(0)}
-[data-au-anim="stagger"]>*{opacity:0;transform:translateY(18px);transition:opacity .5s ease-out,transform .5s ease-out}
-[data-au-anim="stagger"].au-in>*{opacity:1;transform:translateY(0)}
+[data-au-anim="reveal"]{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .7s cubic-bezier(.16,.8,.3,1),transform .7s cubic-bezier(.16,.8,.3,1)}
+[data-au-anim="reveal"].au-in{opacity:1;transform:translateY(0) scale(1)}
+[data-au-anim="stagger"]>*{opacity:0;transform:translateY(20px) scale(.97);transition:opacity .55s cubic-bezier(.16,.8,.3,1),transform .55s cubic-bezier(.16,.8,.3,1)}
+[data-au-anim="stagger"].au-in>*{opacity:1;transform:translateY(0) scale(1)}
 [data-au-anim="stagger"].au-in>*:nth-child(1){transition-delay:.03s}
 [data-au-anim="stagger"].au-in>*:nth-child(2){transition-delay:.08s}
 [data-au-anim="stagger"].au-in>*:nth-child(3){transition-delay:.13s}
