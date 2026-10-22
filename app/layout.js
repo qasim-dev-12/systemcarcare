@@ -9,6 +9,7 @@ import HeroTilt from "./components/HeroTilt";
 import ScrollReveal from "./components/ScrollReveal";
 
 export const metadata = {
+  metadataBase: new URL("https://systemxcarcare.com"),
   title: "System X Car Care",
   description:
     "An independent workshop in Al Quoz, Dubai Industrial Area, Dubai.",
