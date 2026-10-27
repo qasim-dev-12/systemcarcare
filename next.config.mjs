@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    agentUpgrade: "security",
+  },
   async redirects() {
     return [
       { source: "/car-body-kit-abu-dhabi", destination: "/car-body-kit-dubai", permanent: true },
