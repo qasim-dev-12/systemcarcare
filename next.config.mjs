@@ -16,6 +16,8 @@ const nextConfig = {
       { source: "/peelable-car-paint-abu-dhabi", destination: "/peelable-car-paint-dubai", permanent: true },
       { source: "/car-upholstery-mussafah", destination: "/car-upholstery-dubai", permanent: true },
       { source: "/bmw/bmw-repair-abu-dhabi", destination: "/bmw/bmw-repair-dubai", permanent: true },
+      { source: "/detailing/paint-protection-film", destination: "/paint-protection-film", permanent: true },
+      { source: "/detailing/car-dechroming-chrome-delete", destination: "/car-dechroming-chrome-delete", permanent: true },
     ];
   },
 };
