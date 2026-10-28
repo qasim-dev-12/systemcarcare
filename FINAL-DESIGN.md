@@ -266,18 +266,42 @@ viewport (390×844) caught it. Before calling a page done:
    not a bug).
 3. Hover-state screenshots for anything with a new hover animation.
 
-## 9. Header / navigation
+## 9. Header / navigation / sitemap
 
-`app/components/Header.js` holds three top-level mega-menu dropdowns —
-**Car Painting**, **Car Protection**, **Car Accessories** — each an `<li
-class="menu-item nav-item menu-item-has-children elementskit-dropdown-has">`
-containing `.ea-mega.ea-mega--services > .ea-mega__in > ul.ea-mega__grid
-.ea-mega__grid--{3|4|5}`. When a new service page is added, add its link to
-whichever of the three category dropdowns it belongs to (reuse an existing
-icon pattern: `<img>` for items that have a `/wp-content/uploads/service-icons/*.webp`
-asset, inline SVG otherwise). If a sub-item has no page yet, point it at the
-closest existing page rather than letting it 404 — and say so when reporting
-the change, since that's a placeholder, not a finished link.
+Every new service page has to be wired into **three** places, not just
+created. Missing any of these means the page exists but nothing links to it
+(or search engines never find it):
+
+1. **`app/components/Header.js`** — holds three top-level mega-menu
+   dropdowns — **Car Painting**, **Car Protection**, **Car Accessories** —
+   each an `<li class="menu-item nav-item menu-item-has-children
+   elementskit-dropdown-has">` containing `.ea-mega.ea-mega--services >
+   .ea-mega__in > ul.ea-mega__grid .ea-mega__grid--{3|4|5}`. Add the new
+   page's link to whichever of the three category dropdowns it belongs to
+   (reuse an existing icon pattern: `<img>` for items that have a
+   `/wp-content/uploads/service-icons/*.webp` asset, inline SVG otherwise).
+   Often the menu item **already exists** but points at a placeholder page
+   (e.g. a generic sibling page, or `/contact`) because the dedicated page
+   hadn't been built yet — search for the exact `<span
+   class="ea-mega__t">Item Name</span>` text first and just repoint its
+   preceding `href`, rather than assuming you need to add a new `<li>`. Be
+   careful: several unrelated menu items can share the same placeholder
+   href — only touch the one whose link text matches.
+2. **`app/page.js`** (homepage) — the services section has a card per
+   service (`<a href="..."><span class="ea-hmsvc__shot"><img ...></span>
+   <span class="ea-hmsvc__b"><h3>Service Name</h3><p>...</p></span></a>`).
+   Find the card by its `<h3>` text and repoint that anchor's `href` to the
+   new page. Same placeholder caveat as above — check what it currently
+   points to before assuming it's already correct.
+3. **`app/sitemap.js`** — add `{ path: "/new-page-slug", priority: 0.7–0.8,
+   changeFrequency: "monthly" }` to the `routes` array, grouped near other
+   car-care service routes. Service pages use 0.8; narrower/secondary pages
+   use 0.7.
+
+If a sub-item genuinely has no page yet (out of scope for the current task),
+point it at the closest existing page rather than letting it 404 — and say
+so explicitly when reporting the change, since that's a placeholder, not a
+finished link.
 
 ## 10. Build checklist for a new page
 
@@ -292,6 +316,9 @@ the change, since that's a placeholder, not a finished link.
 5. Add the animation layer from §7 (it's mostly copy-paste CSS + the right
    class names in the markup).
 6. Update `metadata` (title/description/canonical/OG/Twitter).
-7. Add the page to the relevant `Header.js` mega-menu (§9).
-8. Run the verification steps in §8. Don't report the page done without a
+7. Wire the page in per §9: `Header.js` mega-menu link, the homepage
+   `app/page.js` service card link, and `app/sitemap.js`.
+8. Run `npm run lint` on every file you touched, then `npm run build` — both
+   must pass clean before the verification pass in §8.
+9. Run the verification steps in §8. Don't report the page done without a
    mobile screenshot.
