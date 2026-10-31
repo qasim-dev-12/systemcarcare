@@ -21,6 +21,7 @@ const routes = [
   { path: "/car-body-kit-dubai", priority: 0.7, changeFrequency: "monthly" },
   { path: "/car-rust-proofing-dubai", priority: 0.8, changeFrequency: "monthly" },
   { path: "/car-rim-painting-dubai", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/brake-caliper-painting-dubai", priority: 0.8, changeFrequency: "monthly" },
   { path: "/peelable-car-paint-dubai", priority: 0.7, changeFrequency: "monthly" },
   { path: "/bmw/bmw-repair-dubai", priority: 0.6, changeFrequency: "monthly" },
   { path: "/car-major-services-in-dubai", priority: 0.7, changeFrequency: "monthly" },
