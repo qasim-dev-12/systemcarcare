@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FloatingWidgets from "./components/FloatingWidgets";
 import Preamble from "./components/Preamble";
+import Analytics from "./components/Analytics";
 import CarouselEnhancer from "./components/CarouselEnhancer";
 import HeroTilt from "./components/HeroTilt";
 import ScrollReveal from "./components/ScrollReveal";
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="wp-singular wp-custom-logo wp-embed-responsive wp-theme-astra ehf-footer ehf-template-astra ehf-stylesheet-astra ast-desktop ast-page-builder-template astra-4.13.6 group-blog ast-single-post ast-replace-site-logo-transparent ast-inherit-site-logo-transparent ast-hfb-header elementor-default elementor-kit-442 elementor-page">
+        <Analytics />
         <link
           rel="stylesheet"
           href="/_next-legacy/static/chunks/02tb7kep6xs21150a.css"
