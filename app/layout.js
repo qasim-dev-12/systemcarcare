@@ -2,6 +2,7 @@ import "./legacy-chrome.css";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import VisitWorkshop from "./components/VisitWorkshop";
 import FloatingWidgets from "./components/FloatingWidgets";
 import Preamble from "./components/Preamble";
 import Analytics from "./components/Analytics";
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
         <div id="page" className="hfeed site">
           <Header />
           {children}
+          <VisitWorkshop />
           <Footer />
         </div>
         <FloatingWidgets />
