@@ -133,6 +133,13 @@ body{overflow-x:clip}
 .ea-hdr .ea-mega__grid--5{grid-template-columns:repeat(5,1fr)}
 .ea-hdr .ea-mega__grid--4{grid-template-columns:repeat(4,1fr)}
 .ea-hdr .ea-mega__grid--3{grid-template-columns:repeat(3,1fr)}
+/* Equal 1fr tracks stretch every column to match the single widest one, which
+   is fine when a menu has enough items to even that out across rows. A short
+   list with a mix of long and short labels (e.g. "System X Diamond SS" next
+   to "System X MAX") instead left huge dead space next to the short ones.
+   max-content columns size each one to its own contents, and the max-content
+   panel around it then hugs the result instead of stretching to fill it. */
+.ea-hdr .ea-mega__grid--compact{grid-template-columns:repeat(3,max-content);justify-content:center}
 .ea-hdr .ea-mega li{margin:0}
 .ea-hdr .ea-mega a{
   display:flex;align-items:center;gap:11px;
@@ -351,7 +358,8 @@ body{overflow-x:clip}
   .ea-hdr .ea-mega__grid,
   .ea-hdr .ea-mega__grid--5,
   .ea-hdr .ea-mega__grid--4,
-  .ea-hdr .ea-mega__grid--3{
+  .ea-hdr .ea-mega__grid--3,
+  .ea-hdr .ea-mega__grid--compact{
     display:grid;grid-template-columns:repeat(2,1fr);gap:2px 6px;padding:0 0 6px;
   }
   .ea-hdr .ea-mega a{
