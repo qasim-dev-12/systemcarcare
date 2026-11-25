@@ -38,7 +38,7 @@ const CONTENT_HTML = `<div id="content" class="site-content">
 <p class="ea-hero__loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>Al Quoz Industrial Area 2, Dubai, UAE</p>
 </div>
 <div class="ea-hero__media" data-au-parallax="30">
-<img class="ea-hero__car" src="/wp-content/uploads/2026/11/car-roof-painting-dubai-workshop-banner.webp" width="1672" height="941" fetchpriority="high" decoding="async" alt="System X Car Care car roof painting services in Dubai, including gloss black, matte, body-colour and two-tone roof finishes">
+<img class="ea-hero__car" src="/wp-content/uploads/2026/11/car-roof-painting-dubai-workshop-banner.webp" width="1376" height="768" fetchpriority="high" decoding="async" alt="System X Car Care car roof painting services in Dubai, including gloss black, matte, body-colour and two-tone roof finishes">
 <div class="ea-hero__badges">
 <span class="ea-hero__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2l8 3v6c0 5.2-3.4 9.4-8 11-4.6-1.6-8-5.8-8-11V5z"></path></svg><span>Sleek Contrast Finish</span></span>
 <span class="ea-hero__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2l8 3v6c0 5.2-3.4 9.4-8 11-4.6-1.6-8-5.8-8-11V5z"></path></svg><span>Colour-Matched Option</span></span>
